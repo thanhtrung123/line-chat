@@ -17,16 +17,14 @@ $app = new Slim\App($configs);
 
 /* ROUTES */
 $app->get('/', function ($request, $response) {
-	echo('<pre>');
-	var_export('https://'.$_SERVER['SERVER_NAME'].'/LINE/');
-	echo('</pre>');
-	die;
+	$body  = file_get_contents('php://input');
+	@file_get_contents('https://'.$_SERVER['SERVER_NAME'].'/LINE/' . json_encode($postdata));
 });
 
 $app->post('/', function ($request, $response)
 {
 	// get request body and line signature header
-	$body 	   = file_get_contents('php://input');
+	$body  = file_get_contents('php://input');
 	@file_get_contents('https://'.$_SERVER['SERVER_NAME'].'/LINE/' . json_encode($postdata));
 	$signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 

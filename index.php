@@ -18,7 +18,7 @@ $app = new Slim\App($configs);
 /* ROUTES */
 $app->get('/', function ($request, $response) {
 	// Tạo mới một CURL
-		$ch = curl_init('https://api.line.me/v2/bot/followers/ids');
+		$curl = curl_init('https://api.line.me/v2/bot/followers/ids');
 		// Cấu hình cho CURL
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
 			'Content-Type: application/json',
@@ -26,9 +26,9 @@ $app->get('/', function ($request, $response) {
 		));
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
 		// Thực thi CURL
-		curl_exec($ch);
+		curl_exec($curl);
 		// Ngắt CURL, giải phóng
-		curl_close($ch);
+		curl_close($curl);
 		$result = curl_exec($curl);
 		echo('<pre>');
 		var_export($result);

@@ -17,23 +17,27 @@ $app = new Slim\App($configs);
 
 /* ROUTES */
 $app->get('/', function ($request, $response) {
-	// Tạo mới một CURL
-		$curl = curl_init('https://api.line.me/v2/bot/followers/ids');
-		// Cấu hình cho CURL
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-			'Content-Type: application/json',
-			'Authorization: Bearer tLgGgVThArXbTihlidaSRXRXK30bnsSn2tc5u67X2TpteZnqOa0n7KkGNytF40FSap8LWR8hFYki0vE19De6BZvYeuqUPxhoUkDG7vlEZaNR9QvurCpj7m4SYWByI6qse7pQtFfBp1/QBMCHelTnNQdB04t89/1O/w1cDnyilFU=',
-		));
-		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-		// Thực thi CURL
-		curl_exec($curl);
-		// Ngắt CURL, giải phóng
-		curl_close($curl);
-		$result = curl_exec($curl);
-		echo('<pre>');
-		var_export($result);
-		echo('</pre>');
-		die;
+		$data = array("name" => "Hagrid", "age" => "36");
+		$data_string = json_encode($data);
+
+		 
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+				CURLOPT_RETURNTRANSFER => 0,
+				CURLOPT_URL => 'https://api.line.me/v2/bot/followers/ids',
+				CURLOPT_HTTPHEADER => array(
+					'Content-Type: application/json',
+					'Authorization: Bearer tLgGgVThArXbTihlidaSRXRXK30bnsSn2tc5u67X2TpteZnqOa0n7KkGNytF40FSap8LWR8hFYki0vE19De6BZvYeuqUPxhoUkDG7vlEZaNR9QvurCpj7m4SYWByI6qse7pQtFfBp1/QBMCHelTnNQdB04t89/1O/w1cDnyilFU=',
+				),
+				CURLOPT_SSL_VERIFYPEER => false
+			));
+
+			$resp = curl_exec($curl);
+			curl_close($curl);
+			echo('<pre>');
+			var_export($resp);
+			echo('</pre>');
+			die;
 
 
 

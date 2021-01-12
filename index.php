@@ -25,7 +25,10 @@ $app->post('/', function ($request, $response)
 {
 	// get request body and line signature header
 	$body  = file_get_contents('php://input');
-	@file_get_contents('https://'.$_SERVER['SERVER_NAME'].'/LINE/' . json_encode($postdata));
+	echo('<pre>');
+	var_export($body);
+	echo('</pre>');
+	$a = @file_get_contents('https://'.$_SERVER['SERVER_NAME'].'/LINE/' . json_encode($body));
 	$signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 
 	// log body and signature

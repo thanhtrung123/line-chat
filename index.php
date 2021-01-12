@@ -17,7 +17,10 @@ $app = new Slim\App($configs);
 
 /* ROUTES */
 $app->get('/', function ($request, $response) {
-	dd('https://'.$_SERVER['SERVER_NAME'].'/LINE/');
+	echo('<pre>');
+	var_export('https://'.$_SERVER['SERVER_NAME'].'/LINE/');
+	echo('</pre>');
+	die;
 });
 
 $app->post('/', function ($request, $response)

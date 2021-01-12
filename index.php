@@ -42,19 +42,13 @@ $app->post('/', function ($request, $response)
 	// init bot
 	$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($_ENV['CHANNEL_ACCESS_TOKEN']);
 	$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $_ENV['CHANNEL_SECRET']]);
-	var_dump($bot);
-	die;
 	$data = json_decode($body, true);
 	foreach ($data['events'] as $event)
 	{
-		$userMessage = $event['message']['text'];
-		if(strtolower($userMessage) == 'halo')
-		{
-			$message = "Halo juga";
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
-			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
-		}
+		$message =  $event['source']['userId'];
+		$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+		$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+		return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 	}
 });
 

@@ -17,59 +17,14 @@ $app = new Slim\App($configs);
 
 /* ROUTES */
 $app->get('/', function ($request, $response) {
-		$data = array("name" => "Hagrid", "age" => "36");
-		$data_string = json_encode($data);
-
-		 
-			$curl = curl_init();
-			curl_setopt_array($curl, array(
-				CURLOPT_RETURNTRANSFER => 0,
-				CURLOPT_URL => 'https://api.line.me/v2/bot/followers/ids',
-				CURLOPT_HTTPHEADER => array(
-					'Content-Type: application/json',
-					'Authorization: Bearer tLgGgVThArXbTihlidaSRXRXK30bnsSn2tc5u67X2TpteZnqOa0n7KkGNytF40FSap8LWR8hFYki0vE19De6BZvYeuqUPxhoUkDG7vlEZaNR9QvurCpj7m4SYWByI6qse7pQtFfBp1/QBMCHelTnNQdB04t89/1O/w1cDnyilFU=',
-				),
-				CURLOPT_SSL_VERIFYPEER => false
-			));
-
-			$resp = curl_exec($curl);
-			curl_close($curl);
-			echo('<pre>');
-			var_export($resp);
-			echo('</pre>');
-			die;
-
-
-
-	// init bot
-	// get request body and line signature header
-	$body 	   = file_get_contents('php://input');
-	$signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
-
-	// log body and signature
-	file_put_contents('php://stderr', 'Body: '.$body);
-
-	// is LINE_SIGNATURE exists in request header?
-	if (empty($signature)){
-		return $response->withStatus(400, 'Signature not set');
-	}
-
-	// is this request comes from LINE?
-	if($_ENV['PASS_SIGNATURE'] == false && ! SignatureValidator::validateSignature($body, $_ENV['CHANNEL_SECRET'], $signature)){
-		return $response->withStatus(400, 'Invalid signature');
-	}
-
-	// init bot
-	$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($_ENV['CHANNEL_ACCESS_TOKEN']);
-	$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $_ENV['CHANNEL_SECRET']]);
-	$data = json_decode($body, true);
-	var_dump($data);
+	dd('https://'.$_SERVER['SERVER_NAME'].'/LINE/');
 });
 
 $app->post('/', function ($request, $response)
 {
 	// get request body and line signature header
 	$body 	   = file_get_contents('php://input');
+	@file_get_contents('https://'.$_SERVER['SERVER_NAME'].'/LINE/' . json_encode($postdata));
 	$signature = $_SERVER['HTTP_X_LINE_SIGNATURE'];
 
 	// log body and signature
